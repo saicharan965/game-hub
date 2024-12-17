@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@game-hub/games/feature-snake-master": [
+        "libs/games/snake_master/feature-snake-master/src/index.ts"
+      ],
       "@game-hub/shared/domain-logic": [
         "libs/shared/domain-logic/src/index.ts"
       ],

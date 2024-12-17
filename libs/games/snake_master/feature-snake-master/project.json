@@ -1,0 +1,29 @@
+{
+  "name": "feature-snake-master",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/games/snake_master/feature-snake-master/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/games/snake_master/feature-snake-master/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/games/snake_master/feature-snake-master/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/games/snake_master/feature-snake-master/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
