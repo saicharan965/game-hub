@@ -1,98 +1,74 @@
-# GameHub
+# Nx Workspace Setup for Game Hub
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+This guide outlines the steps to set up and manage the Game Hub application using Nx microfrontend architecture. Follow the commands below to create and configure the workspace.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Setup Steps
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+### 1. Create a New Nx Workspace
 
-## Run tasks
+Initialize a new Nx workspace named `Game-hub` with the `apps` preset:
 
-To run tasks with Nx use:
-
-```sh
-npx nx <target> <project-name>
+```bash
+npx create-nx-workspace@latest Game-hub --preset=apps
 ```
 
-For example:
+### 2. Add Angular Support
 
-```sh
-npx nx build myproject
+Integrate Angular into the Nx workspace by running:
+
+```bash
+npx nx add @nx/angular
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### 3. Generate Applications and Libraries
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+#### 3.1 Create the Shell Application
 
-## Add new projects
+Generate the host shell application for the Game Hub:
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-
-```sh
-npx nx add @nx/react
+```bash
+nx g @nx/angular:host apps/shells/game-hub-shell --prefix=Game-hub --dryRun
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+> Use the `--dryRun` flag to preview the changes. Remove this flag to apply them.
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+#### 3.2 Create a Remote Application
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
+Add a remote microfrontend (e.g., Snake Master game) to the workspace:
+
+```bash
+nx g @nx/angular:remote apps/games/snake-master --prefix=Game-hub --host=game-hub-shell --dryRun
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+#### 3.3 Create a Shared Domain Logic Library
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Generate a library for shared domain logic:
 
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
+```bash
+nx g @nx/angular:lib libs/shared/domain-logic --dryRun
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+#### 3.4 Create a Feature Library
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Develop a feature-specific library for the Snake Master game:
 
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
+```bash
+nx g @nx/angular:lib libs/games/snake_master/feature-snake-master --dryRun
 ```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 4. Serve the Applications
 
-## Install Nx Console
+Run the shell and its associated remote application simultaneously:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```bash
+nx serve game-hub-shell --devRemotes=snake_master
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Additional Notes
 
-## Useful links
+- **Dry Run Mode**: The `--dryRun` flag previews changes without applying them. Remove the flag when ready to implement changes.
+- **Nx Documentation**: For advanced configurations and details, visit the [Nx documentation](https://nx.dev).
+- **Microfrontend Architecture**: This setup leverages Nx’s module federation for efficient communication between the shell and remote applications.
 
-Learn more:
+Enjoy building your Game Hub!
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
