@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@game-hub/shared/domain-logic": [
+        "libs/shared/domain-logic/src/index.ts"
+      ],
       "snake_master/Module": [
         "apps/games/snake_master/src/app/remote-entry/entry.module.ts"
       ]
