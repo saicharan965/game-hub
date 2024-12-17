@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "snake_master/Module": [
+        "apps/games/snake_master/src/app/remote-entry/entry.module.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
