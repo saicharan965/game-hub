@@ -1,0 +1,419 @@
+@use "sass:map";
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+$enable-shadows: true;
+
+$grey-10: #f8f8f8 !default;
+$grey-20: #ededed !default;
+$grey-30: #d7d7d7 !default;
+$grey-40: #b9b9b9 !default;
+$grey-50: #929292 !default;
+$grey-60: #747474 !default;
+$grey-70: #585858 !default;
+$grey-80: #494949 !default;
+$grey-90: #363636 !default;
+$grey-100: #1a1a1a !default;
+
+$greys: (
+  "grey-10": $grey-10,
+  "grey-20": $grey-20,
+  "grey-30": $grey-30,
+  "grey-40": $grey-40,
+  "grey-50": $grey-50,
+  "grey-60": $grey-60,
+  "grey-70": $grey-70,
+  "grey-80": $grey-80,
+  "grey-90": $grey-90,
+  "grey-100": $grey-100
+) !default;
+
+$blue-10: #f1f8ff !default;
+$blue-20: #dfefff !default;
+$blue-30: #bbdbff !default;
+$blue-40: #88bdfb !default;
+$blue-50: #3395f6 !default;
+$blue-60: #0073dd !default;
+$blue-70: #0057aa !default;
+$blue-80: #00488f !default;
+$blue-90: #00366e !default;
+$blue-100: #001b34 !default;
+
+$blues: (
+  "blue-10": $blue-10,
+  "blue-20": $blue-20,
+  "blue-30": $blue-30,
+  "blue-40": $blue-40,
+  "blue-50": $blue-50,
+  "blue-60": $blue-60,
+  "blue-70": $blue-70,
+  "blue-80": $blue-80,
+  "blue-90": $blue-90,
+  "blue-100": $blue-100
+) !default;
+
+$orange-10: #fff5ec !default;
+$orange-20: #ffe9d5 !default;
+$orange-30: #ffcdaa !default;
+$orange-40: #ffa36e !default;
+$orange-50: #ff8033 !default;
+$orange-60: #fa6105 !default;
+$orange-70: #c84d03 !default;
+$orange-80: #963a02 !default;
+$orange-90: #5f2501 !default;
+$orange-100: #2f1200 !default;
+
+$oranges: (
+  "orange-10": $orange-10,
+  "orange-20": $orange-20,
+  "orange-30": $orange-30,
+  "orange-40": $orange-40,
+  "orange-50": $orange-50,
+  "orange-60": $orange-60,
+  "orange-70": $orange-70,
+  "orange-80": $orange-80,
+  "orange-90": $orange-90,
+  "orange-100": $orange-100
+) !default;
+
+$red-10: #fff4f4 !default;
+$red-20: #ffe7e7 !default;
+$red-30: #ffcacb !default;
+$red-40: #ff9e9e !default;
+$red-50: #ff5a5b !default;
+$red-60: #e6171d !default;
+$red-70: #b10f14 !default;
+$red-80: #950b0f !default;
+$red-90: #710609 !default;
+$red-100: #3d0202 !default;
+
+$reds: (
+  "red-10": $red-10,
+  "red-20": $red-20,
+  "red-30": $red-30,
+  "red-40": $red-40,
+  "red-50": $red-50,
+  "red-60": $red-60,
+  "red-70": $red-70,
+  "red-80": $red-80,
+  "red-90": $red-90,
+  "red-100": $red-100
+) !default;
+
+$yellow-10: #fff6e2 !default;
+$yellow-20: #ffebbb !default;
+$yellow-30: #ffe297 !default;
+$yellow-40: #ffd96b !default;
+$yellow-50: #ffce10 !default;
+$yellow-60: #fac500 !default;
+$yellow-70: #fff !default; // undefined
+$yellow-80: #fff !default; // undefined
+$yellow-90: #fff !default; // undefined
+$yellow-100: #fff !default; // undefined
+
+$yellows: (
+  "yellow-10": $yellow-10,
+  "yellow-20": $yellow-20,
+  "yellow-30": $yellow-30,
+  "yellow-40": $yellow-40,
+  "yellow-50": $yellow-50,
+  "yellow-60": $yellow-60,
+  "yellow-70": $yellow-70,
+  "yellow-80": $yellow-80,
+  "yellow-90": $yellow-90,
+  "yellow-100": $yellow-100
+) !default;
+
+$green-10: #eefaef !default;
+$green-20: #dbf2d2 !default;
+$green-30: #c2dfbf !default;
+$green-40: #99c298 !default;
+$green-50: #63a16b !default;
+$green-60: #008643 !default;
+$green-70: #006631 !default;
+$green-80: #005528 !default;
+$green-90: #003f1c !default;
+$green-100: #00200b !default;
+
+$greens: (
+  "green-10": $green-10,
+  "green-20": $green-20,
+  "green-30": $green-30,
+  "green-40": $green-40,
+  "green-50": $green-50,
+  "green-60": $green-60,
+  "green-70": $green-70,
+  "green-80": $green-80,
+  "green-90": $green-90,
+  "green-100": $green-100
+) !default;
+
+$black: #000;
+$white: #fff;
+$blue: $blue-60;
+$red: $red-60;
+$orange: $orange-60;
+$yellow: $yellow-60;
+$green: $green-60;
+
+$progress-height: 0.25rem;
+$progress-bg: $grey-30;
+$progress-box-shadow: none;
+$progress-bar-bg: $blue-50;
+
+$colors: (
+  "blue": $blue,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "black": $black,
+  "white": $white,
+  "grey": $grey-90
+) !default;
+
+$primary: $blue;
+$secondary: $orange;
+$success: $green;
+$danger: $red;
+$warning: $orange;
+$light: $grey-20;
+
+$spacer: 0.5rem;
+$spacers: ();
+
+@for $i from 0 through 10 {
+  $spacers: map.merge(
+    $spacers,
+    (
+      $i: $spacer * $i
+    )
+  );
+}
+
+$body-bg: $grey-20;
+$body-color: $grey-90;
+$body-secondary-color: $grey-60;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+$border-color: $grey-30;
+$border-radius: 4px;
+$border-radius-sm: 4px;
+$border-radius-lg: 8px;
+
+$box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 15%);
+$box-shadow-sm: 0 0.25rem 0.5rem rgb(0 0 0 / 10%);
+$box-shadow-lg: 0 0.5rem 2rem rgb(0 0 0 / 15%);
+$box-shadow-inset: inset 0 1px 2px rgb(29 41 64 / 8%);
+
+$card-box-shadow: 0 1px 1px 0 rgb(0 0 0 / 25%);
+$card-bg: $white;
+$card-border-radius: $border-radius-lg;
+$card-border-width: 0;
+
+$font-family-sans-serif: "Open Sans";
+$font-size-root: 16px;
+$font-size-base: 0.8125rem;
+$line-height-base: 1.5385;
+$line-height-sm: 1.2308;
+
+$h1-font-size: 2rem;
+$h2-font-size: 1.5rem;
+$h3-font-size: 1.25rem;
+$h4-font-size: 1rem;
+$h5-font-size: 1rem;
+$h6-font-size: 0.875rem;
+
+$font-sizes: (
+  1: 19px,
+  2: 17px,
+  3: 15px,
+  4: 13px,
+  5: 11px
+);
+
+$headings-font-family: "Poppins";
+$headings-font-weight: 600;
+$headings-line-height: 1.25;
+
+$hr-opacity: 1;
+
+$mark-padding: 0;
+
+$table-bg: $white;
+$table-hover-bg: $blue-10;
+$table-active-bg: $blue-10;
+
+$btn-font-size: 15px;
+$btn-font-size-sm: 13px;
+$btn-font-size-lg: 18.5px;
+
+$btn-padding-x: 1rem;
+$btn-padding-y: 0.75rem;
+$btn-padding-x-sm: 0.75rem;
+$btn-padding-y-sm: 0.5rem;
+$btn-padding-x-lg: 1rem;
+$btn-padding-y-lg: 0.75rem;
+
+$btn-disabled-opacity: 1;
+
+$btn-link-color: $grey-90;
+$btn-link-hover-color: $grey-90;
+$btn-link-disabled-color: $white;
+
+$form-label-margin-bottom: 0.25rem;
+
+$input-bg: $white;
+$input-disabled-bg: $grey-20;
+$input-disabled-border-color: $grey-40;
+
+$input-border-color: $border-color;
+$input-focus-border-color: $blue-60;
+
+$input-placeholder-color: $grey-50;
+
+$form-check-input-width: 1rem;
+$form-check-padding-start: 1.625rem;
+$form-check-margin-bottom: 0;
+$form-check-input-active-filter: none;
+$form-check-input-border: 1px solid $grey-30;
+$form-check-input-border-radius: $border-radius;
+$form-check-input-focus-border: none;
+$form-check-input-checked-border-color: $grey-30;
+$form-check-min-height: 1rem;
+
+$form-select-indicator-color: $grey-50;
+
+$spinner-width: 1.5rem !default;
+$spinner-border-width: 0.125em !default;
+$spinner-border-width-sm: 0.1em !default;
+
+$zindex-dropdown: 1035;
+
+$dropdown-padding-y: 0;
+$dropdown-bg: $white;
+$dropdown-border-width: 0;
+$dropdown-link-color: $grey-90;
+$dropdown-link-hover-color: $body-color;
+$dropdown-link-hover-bg: $blue-10;
+$dropdown-link-active-color: $body-color;
+$dropdown-link-active-bg: $blue-10;
+$dropdown-link-disabled-color: $grey-50;
+$dropdown-item-padding-y: 0.75rem;
+$dropdown-item-padding-x: 0.75rem;
+$dropdown-divider-bg: $grey-30;
+$dropdown-divider-margin-y: 0;
+$dropdown-header-color: $grey-60;
+$dropdown-header-padding-x: $dropdown-item-padding-x;
+$dropdown-header-padding-y: 0.5rem;
+$caret-width: 0;
+
+$pagination-bg: $white;
+
+$mark-bg: #ddd;
+
+$form-floating-line-height: 1.25;
+$form-floating-padding-y: 0.625rem;
+$form-floating-input-padding-t: 0.75rem;
+$form-floating-input-padding-b: 0;
+$form-floating-label-opacity: 0.65;
+$form-floating-label-transform: scale(0.75) translateY(-0.5rem) translateX(0.15rem);
+$form-floating-transition:
+  opacity 0.1s ease-in-out,
+  transform 0.1s ease-in-out;
+
+$offcanvas-padding-y: 0;
+$offcanvas-padding-x: 0;
+
+$accordion-bg: $white;
+$accordion-body-padding-x: 0;
+$accordion-body-padding-y: 0;
+$accordion-border-width: 0;
+
+$badge-font-size: 12px;
+$badge-color: $body-color;
+$badge-padding-y: 0.125rem;
+$badge-padding-x: 0.125rem;
+
+$alert-border-radius: 8px;
+$alert-border-width: 1px solid;
+
+$list-group-color: $body-color;
+$list-group-bg: $white;
+$list-group-border-color: $grey-30;
+$list-group-border-width: 0;
+$list-group-border-radius: 0;
+
+$list-group-item-padding-y: 0;
+$list-group-item-padding-x: 1rem;
+
+$list-group-hover-bg: $grey-10;
+$list-group-active-color: $body-color;
+$list-group-active-bg: $table-active-bg;
+$list-group-active-border-color: $blue-60;
+
+$list-group-action-color: $list-group-color;
+$list-group-action-hover-color: $list-group-action-color;
+
+$list-group-action-active-color: $body-color;
+$list-group-action-active-bg: $list-group-hover-bg;
+
+$toast-font-size: $font-size-base;
+$toast-box-shadow: none;
+$toast-spacing: 0.5rem;
+
+$tooltip-font-size: $font-size-base;
+$tooltip-color: $grey-10;
+$tooltip-bg: $grey-90;
+$tooltip-opacity: 0.95;
+$tooltip-padding-y: $spacer;
+$tooltip-padding-x: $tooltip-padding-y;
+$tooltip-arrow-width: 0.75rem;
+$tooltip-arrow-height: 0.5rem;
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+);
+
+$btn-box-shadow: null;
+$btn-active-box-shadow: null;
+$btn-focus-box-shadow: null;
+$input-box-shadow: null;
+$input-focus-box-shadow: null;
+$form-select-box-shadow: null;
+$form-select-focus-box-shadow: null;
+$form-check-input-focus-box-shadow: null;
+$accordion-button-focus-box-shadow: null;
+
+$form-floating-height: add(2.75rem, $input-height-border);
+$form-floating-padding-x: $input-padding-x;
+
+$modal-footer-margin-between: 0;
+$modal-content-bg: $white;
+$modal-backdrop-opacity: 0.15;
+$modal-sm: 300px;
+$modal-md: 500px;
+$modal-lg: 800px;
+$modal-xl: 1140px;
+
+$badge-font-weight: $font-weight-normal;
+
+// 4. Include any default map overrides here
+
+// 5. Include remainder of required parts
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";

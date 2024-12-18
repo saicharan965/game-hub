@@ -26,6 +26,9 @@
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/games/snake_master/webpack.config.ts"
+        },
+        "stylePreprocessorOptions": {
+          "includePaths": [".scss"]
         }
       },
       "configurations": {

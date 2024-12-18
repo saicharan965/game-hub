@@ -26,6 +26,9 @@
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/shells/game-hub-shell/webpack.config.ts"
+        },
+        "stylePreprocessorOptions": {
+          "includePaths": [".scss"]
         }
       },
       "configurations": {
