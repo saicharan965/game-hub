@@ -1,13 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { SnakeFacadeService } from '@game-hub/shared/domain-logic';
-
-enum GameState {
-  NotStarted,
-  Started,
-  Paused,
-  GameOver,
-}
+import { GameState, SnakeFacadeService } from '@game-hub/shared/domain-logic';
 
 @Component({
   selector: 'game-hub-feature-snake-master',
@@ -48,11 +41,11 @@ export class FeatureSnakeMasterComponent implements AfterViewInit, OnDestroy {
   #snakeFacadeService = inject(SnakeFacadeService)
   constructor(
   ) {
-    this.#headImg.src = './assets/svgs/snake-head.svg';
-    this.#bodyImg.src = './assets/svgs/snake-body.svg';
-    this.#foodImg.src = './assets/svgs/apple.svg';
-    this.#volcanoImg.src = './assets/svgs/volcano.svg';
-    this.#blackholeImg.src = './assets/svgs/blackhole.svg';
+    this.#headImg.src = 'assets/snake-master/snake-head.svg';
+    this.#bodyImg.src = 'assets/snake-master/snake-body.svg';
+    this.#foodImg.src = 'assets/snake-master/apple.svg';
+    this.#volcanoImg.src = 'assets/snake-master/volcano.svg';
+    this.#blackholeImg.src = 'assets/snake-master/blackhole.svg';
   }
 
   public ngAfterViewInit(): void {

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@game-hub/assets": ["libs/shared/assets/src/index.ts"],
       "@game-hub/games/feature-snake-master": [
         "libs/games/snake_master/feature-snake-master/src/index.ts"
       ],

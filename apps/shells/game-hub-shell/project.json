@@ -20,6 +20,11 @@
           {
             "glob": "**/*",
             "input": "apps/shells/game-hub-shell/public"
+          },
+          {
+            "input": "libs/shared/assets/src/lib/assets/snake-master/svgs",
+            "glob": "**.*",
+            "output": "assets/snake-master"
           }
         ],
         "styles": [
