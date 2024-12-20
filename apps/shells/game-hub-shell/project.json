@@ -22,7 +22,11 @@
             "input": "apps/shells/game-hub-shell/public"
           }
         ],
-        "styles": ["apps/shells/game-hub-shell/src/styles.scss"],
+        "styles": [
+          "apps/shells/game-hub-shell/src/styles.scss",
+          "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+           "node_modules/ngx-toastr/toastr.css"
+        ],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/shells/game-hub-shell/webpack.config.ts"

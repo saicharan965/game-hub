@@ -12,7 +12,6 @@ import { TokenInterceptor } from './auth/token-interceptor.service';
 })
 export class SharedDomainLogicModule {
   static forRoot(type: Environment): ModuleWithProviders<SharedDomainLogicModule> {
-    console.log(type)
     return {
       ngModule: SharedDomainLogicModule,
       providers: [

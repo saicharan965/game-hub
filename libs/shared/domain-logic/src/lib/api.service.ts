@@ -507,8 +507,7 @@ export interface ICreateScoreResponse {
 }
 
 export class CreateUserRequest implements ICreateUserRequest {
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     isDeleted?: boolean;
@@ -525,8 +524,7 @@ export class CreateUserRequest implements ICreateUserRequest {
 
     init(_data?: any) {
         if (_data) {
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
+            this.name = _data["name"];
             this.emailId = _data["emailId"];
             this.profilePictureUrl = _data["profilePictureUrl"];
             this.isDeleted = _data["isDeleted"];
@@ -543,8 +541,7 @@ export class CreateUserRequest implements ICreateUserRequest {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
+        data["name"] = this.name;
         data["emailId"] = this.emailId;
         data["profilePictureUrl"] = this.profilePictureUrl;
         data["isDeleted"] = this.isDeleted;
@@ -554,8 +551,7 @@ export class CreateUserRequest implements ICreateUserRequest {
 }
 
 export interface ICreateUserRequest {
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     isDeleted?: boolean;
@@ -564,8 +560,7 @@ export interface ICreateUserRequest {
 
 export class CreateUserResponse implements ICreateUserResponse {
     publicIdentifier?: string;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     message?: string | undefined;
@@ -582,8 +577,7 @@ export class CreateUserResponse implements ICreateUserResponse {
     init(_data?: any) {
         if (_data) {
             this.publicIdentifier = _data["publicIdentifier"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
+            this.name = _data["name"];
             this.emailId = _data["emailId"];
             this.profilePictureUrl = _data["profilePictureUrl"];
             this.message = _data["message"];
@@ -600,8 +594,7 @@ export class CreateUserResponse implements ICreateUserResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["publicIdentifier"] = this.publicIdentifier;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
+        data["name"] = this.name;
         data["emailId"] = this.emailId;
         data["profilePictureUrl"] = this.profilePictureUrl;
         data["message"] = this.message;
@@ -611,8 +604,7 @@ export class CreateUserResponse implements ICreateUserResponse {
 
 export interface ICreateUserResponse {
     publicIdentifier?: string;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     message?: string | undefined;
@@ -776,8 +768,7 @@ export interface IPaginatedLeaderboardResponse {
 
 export class UpdateUserRequest implements IUpdateUserRequest {
     publicIdentifier?: string;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
 
@@ -793,8 +784,7 @@ export class UpdateUserRequest implements IUpdateUserRequest {
     init(_data?: any) {
         if (_data) {
             this.publicIdentifier = _data["publicIdentifier"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
+            this.name = _data["name"];
             this.emailId = _data["emailId"];
             this.profilePictureUrl = _data["profilePictureUrl"];
         }
@@ -810,8 +800,7 @@ export class UpdateUserRequest implements IUpdateUserRequest {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["publicIdentifier"] = this.publicIdentifier;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
+        data["name"] = this.name;
         data["emailId"] = this.emailId;
         data["profilePictureUrl"] = this.profilePictureUrl;
         return data;
@@ -820,8 +809,7 @@ export class UpdateUserRequest implements IUpdateUserRequest {
 
 export interface IUpdateUserRequest {
     publicIdentifier?: string;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
 }
@@ -830,8 +818,7 @@ export class User implements IUser {
     userId?: number;
     publicIdentifier?: string;
     auth0Identifier?: string | undefined;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     isDeleted?: boolean;
@@ -851,8 +838,7 @@ export class User implements IUser {
             this.userId = _data["userId"];
             this.publicIdentifier = _data["publicIdentifier"];
             this.auth0Identifier = _data["auth0Identifier"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
+            this.name = _data["name"];
             this.emailId = _data["emailId"];
             this.profilePictureUrl = _data["profilePictureUrl"];
             this.isDeleted = _data["isDeleted"];
@@ -872,8 +858,7 @@ export class User implements IUser {
         data["userId"] = this.userId;
         data["publicIdentifier"] = this.publicIdentifier;
         data["auth0Identifier"] = this.auth0Identifier;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
+        data["name"] = this.name;
         data["emailId"] = this.emailId;
         data["profilePictureUrl"] = this.profilePictureUrl;
         data["isDeleted"] = this.isDeleted;
@@ -886,8 +871,7 @@ export interface IUser {
     userId?: number;
     publicIdentifier?: string;
     auth0Identifier?: string | undefined;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     isDeleted?: boolean;
@@ -896,8 +880,7 @@ export interface IUser {
 
 export class UserDetailsResponse implements IUserDetailsResponse {
     publicIdentifier?: string;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     isDeleted?: boolean;
@@ -915,8 +898,7 @@ export class UserDetailsResponse implements IUserDetailsResponse {
     init(_data?: any) {
         if (_data) {
             this.publicIdentifier = _data["publicIdentifier"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
+            this.name = _data["name"];
             this.emailId = _data["emailId"];
             this.profilePictureUrl = _data["profilePictureUrl"];
             this.isDeleted = _data["isDeleted"];
@@ -934,8 +916,7 @@ export class UserDetailsResponse implements IUserDetailsResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["publicIdentifier"] = this.publicIdentifier;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
+        data["name"] = this.name;
         data["emailId"] = this.emailId;
         data["profilePictureUrl"] = this.profilePictureUrl;
         data["isDeleted"] = this.isDeleted;
@@ -946,8 +927,7 @@ export class UserDetailsResponse implements IUserDetailsResponse {
 
 export interface IUserDetailsResponse {
     publicIdentifier?: string;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
+    name?: string | undefined;
     emailId?: string | undefined;
     profilePictureUrl?: string | undefined;
     isDeleted?: boolean;
@@ -955,7 +935,7 @@ export interface IUserDetailsResponse {
 }
 
 export class ApiException extends Error {
-    override message: string;
+  override  message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };

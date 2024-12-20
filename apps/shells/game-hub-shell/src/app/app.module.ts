@@ -1,27 +1,37 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Route, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { AuthModule } from '@auth0/auth0-angular';
+import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { environment } from '../env/env.local';
 import { SharedDomainLogicModule, Environment } from '@game-hub/shared/domain-logic';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { MainComponent } from './main/main.component';
+
+const ROUTES: Route[] = [
+  {
+    path: '',
+    loadChildren: () => import('./main/main.module').then(m => m.MainModule),
+    canActivate: [AuthGuard],
+  }
+];
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [AppComponent, NxWelcomeComponent, MainComponent, MainComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    RouterModule.forRoot(ROUTES),
     SharedDomainLogicModule.forRoot(environment.type as Environment),
     AuthModule.forRoot({
       domain: environment.auth.domain,
       clientId: environment.auth.clientId,
       authorizationParams: {
         redirect_uri: window.location.origin,
-        audience: `https://${environment.auth.domain}/api/v2/`
+        audience: `https://${environment.auth.domain}/api/v2/`,
       },
     }),
     ToastrModule.forRoot(),
