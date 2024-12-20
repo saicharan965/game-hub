@@ -1,1 +1,34 @@
-<p>feature-snake-master works!</p>
+<nav class="navbar bg-dark text-light secondary-navbar">
+  <div class="container-fluid d-flex justify-content-start align-items-center gap-4">
+    <button class="btn btn-outline-warning" (click)="togglePause()">
+      <i [ngClass]="gameState === GameState.Paused ? 'bi-play' : 'bi-pause'"></i>
+    </button>
+    <button class="btn btn-outline-warning" (click)="restartGame()">
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
+    <button class="btn btn-outline-warning" routerLink="/">
+      <i class="bi bi-house"></i>
+    </button>
+    <div class="badge bg-secondary d-flex justify-content-between align-items-center">
+      <p class="text-light mb-0 fs-4 me-2">{{score}}</p>
+      <i class="bi bi-fire text-warning fs-4"></i>
+    </div>
+  </div>
+</nav>
+
+<div class="game-container">
+  <canvas #gameBoard class="game-board"></canvas>
+  <canvas #animationBoard class="animation-board"></canvas>
+  <div *ngIf="gameState === GameState.Paused" class="pause-overlay">
+    <h1>Paused</h1>
+    <p>Take a deep breath and resume when ready!</p>
+  </div>
+  <div *ngIf="gameState === GameState.GameOver" class="game-over-screen">
+    <h1>Game Over</h1>
+    <p>Your final score: {{ score }}</p>
+    <div class="d-flex justify-content-center mt-4">
+      <button class="btn btn-outline-warning mx-2" (click)="restartGame()">Restart</button>
+      <button class="btn btn-outline-warning mx-2" routerLink="/">Home</button>
+    </div>
+  </div>
+</div>

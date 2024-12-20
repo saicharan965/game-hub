@@ -19,7 +19,13 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/games/snake_master/public"
+            "input": "apps/games/snake_master/public",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/games/snake_master/feature-snake-master/src/assets",
+            "output": "assets"
           }
         ],
         "styles": ["apps/games/snake_master/src/styles.scss"],

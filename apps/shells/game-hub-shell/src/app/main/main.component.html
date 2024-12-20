@@ -1,13 +1,13 @@
 <div>
-  <nav class="navbar navbar-light bg-success">
+  <nav class="navbar navbar-light bg-primary">
     <div class="container-fluid container-div">
       <div class="col-4">
-        <a class="navbar-brand mx-4">
-          <span class="badge bg-warning text-dark btn" routerLink="/">SNAKE MASTER</span>
+        <a class="navbar-brand">
+          <span class="badge bg-warning text-dark btn" routerLink="/">GAME HUB</span>
         </a>
       </div>
       <div class="col-8 d-flex justify-content-end align-items-center">
-        <span *ngIf="user" class="badge me-4">Welcome, {{ user.name }}</span>
+        <span *ngIf="user" class="badge me-4 text-light">Welcome, {{ user.name }}</span>
         <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
         <ul class="dropdown-menu dropdown-menu-end bg-success-subtle">
           <li routerLink="profile" class="dropdown-item py-2 btn">

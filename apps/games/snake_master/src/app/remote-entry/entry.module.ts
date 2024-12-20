@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { RemoteEntryComponent } from './entry.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { remoteRoutes } from './entry.routes';
+import { FeatureSnakeMasterModule } from '@game-hub/games/feature-snake-master';
 
 @NgModule({
-  declarations: [RemoteEntryComponent, NxWelcomeComponent],
-  imports: [CommonModule, RouterModule.forChild(remoteRoutes)],
+  declarations: [RemoteEntryComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(remoteRoutes),
+    FeatureSnakeMasterModule
+  ],
   providers: [],
 })
-export class RemoteEntryModule {}
+export class RemoteEntryModule { }

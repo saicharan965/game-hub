@@ -1,0 +1,16 @@
+@import "shared";
+
+.nav-item {
+  height: 100%;
+  border-left: 1px solid $light;
+  cursor: pointer;
+}
+
+.nav-item-1 {
+  height: 100%;
+  cursor: pointer;
+}
+
+hr {
+  height: 0.25px;
+}
