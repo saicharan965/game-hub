@@ -8,7 +8,7 @@
 @import "./drag-and-drop";
 
 :focus-visible {
-  outline-color: $blue-60;
+  outline-color: purple-60;
 }
 
 html,
@@ -18,7 +18,7 @@ body {
 
 .top-bar-item:not(.dropdown-item),
 .top-bar-item:not(.dropdown-item) .btn {
-  background-color: $blue-60;
+  background-color: purple-60;
   color: $white;
   height: 44px;
   display: flex;
@@ -27,13 +27,13 @@ body {
 
   &:hover {
     color: $white;
-    background-color: $blue-70;
+    background-color: purple-70;
   }
 
   &.active,
   &.show,
   .show &:not(.dropdown-item) {
-    background-color: $blue-70;
+    background-color: purple-70;
     color: $white;
   }
 

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "generate-client:local": "node ./generate-client /input:http://localhost:5098/swagger/v1/swagger.json /output:./src/app/api/api.service.ts /baseUrlTokenName:API_BASE_URL",
-    "generate-client:prod": "node ./generate-client /input:http://localhost:5098/swagger/v1/swagger.json /output:./src/app/api/api.service.ts /baseUrlTokenName:API_BASE_URL"
+    "generate-client:local": "node ./generate-client /input:http://localhost:5098/swagger/v1/swagger.json /output:./libs/shared/domain-logic/src/lib/api.service.ts /baseUrlTokenName:API_BASE_URL",
+    "generate-client:prod": "node ./generate-client /input:http://localhost:5098/swagger/v1/swagger.json /output:./libs/shared/domain-logic/src/lib/api.service.ts /baseUrlTokenName:API_BASE_URL"
   },
   "private": true,
   "devDependencies": {

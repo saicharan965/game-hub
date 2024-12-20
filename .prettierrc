@@ -1,3 +1,30 @@
 {
-  "singleQuote": true
+  "singleQuote": true,
+  "tabWidth": 4,
+  "printWidth": 140,
+  "bracketSameLine": true,
+  "overrides": [
+    {
+      "files": [".prettierrc", "*.json"],
+      "options": {
+        "tabWidth": 2,
+        "printWidth": 80
+      }
+    },
+    {
+      "files": ["*.scss"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false,
+        "trailingComma": "none"
+      }
+    },
+    {
+      "files": ["*.md", "*.mdx"],
+      "options": {
+        "proseWrap": "preserve",
+        "singleAttributePerLine": true
+      }
+    }
+  ]
 }
