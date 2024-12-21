@@ -22,7 +22,7 @@
             "input": "apps/shells/game-hub-shell/public"
           },
           {
-            "input": "libs/shared/assets/src/lib/assets/snake-master/svgs",
+            "input": "libs/shared/assets/src/lib/assets/snake-master",
             "glob": "**.*",
             "output": "assets/snake-master"
           }

@@ -59,9 +59,7 @@
       "unitTestRunner": "none"
     },
     "@nx/angular:component": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "none"
+      "style": "scss"
     }
   }
 }

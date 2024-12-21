@@ -56,6 +56,14 @@ Develop a feature-specific library for the Snake Master game:
 nx g @nx/angular:lib libs/games/snake_master/feature-snake-master --dryRun
 ```
 
+#### 3.5 Create a Feature Library
+
+Develop a feature-specific component library for the Snake Master game:
+
+```bash
+nx g @nx/angular:component --standalone=false --prefix=game-hub-snake-master --path='apps/games/snake_master/src/app/remote-entry/achivements/achivements' --skipTests=true
+```
+
 ### 4. Serve the Applications
 
 Run the shell and its associated remote application simultaneously:
@@ -66,9 +74,8 @@ nx serve game-hub-shell --devRemotes=snake_master
 
 ## Additional Notes
 
-- **Dry Run Mode**: The `--dryRun` flag previews changes without applying them. Remove the flag when ready to implement changes.
-- **Nx Documentation**: For advanced configurations and details, visit the [Nx documentation](https://nx.dev).
-- **Microfrontend Architecture**: This setup leverages Nx’s module federation for efficient communication between the shell and remote applications.
+-   **Dry Run Mode**: The `--dryRun` flag previews changes without applying them. Remove the flag when ready to implement changes.
+-   **Nx Documentation**: For advanced configurations and details, visit the [Nx documentation](https://nx.dev).
+-   **Microfrontend Architecture**: This setup leverages Nx’s module federation for efficient communication between the shell and remote applications.
 
 Enjoy building your Game Hub!
-
