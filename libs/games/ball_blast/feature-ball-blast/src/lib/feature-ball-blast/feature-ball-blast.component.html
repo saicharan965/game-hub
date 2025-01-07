@@ -1,1 +1,8 @@
-<p>feature-ball-blast works!</p>
+<div class="game-container">
+  <canvas #gameCanvas class="game-board"></canvas>
+  <div *ngIf="gameOver" class="game-over-screen">
+    <h1>Game Over</h1>
+    <p>Your final score: {{ score }}</p>
+    <button (click)="restartGame()">Restart</button>
+  </div>
+</div>

@@ -9,17 +9,20 @@ import { AchivementsComponent } from './achivements/achivements.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { NewGameComponent } from './new-game/new-game.component';
+import { FeatureBallBlastModule } from '@game-hub/games/feature-ball-blast';
 
 @NgModule({
-    declarations: [
-        RemoteEntryComponent,
-        NxWelcomeComponent,
-        AchivementsComponent,
-        LeaderboardComponent,
-        MainMenuComponent,
-        NewGameComponent,
-    ],
-    imports: [CommonModule, RouterModule.forChild(remoteRoutes)],
-    providers: [],
+  declarations: [
+    RemoteEntryComponent,
+    NxWelcomeComponent,
+    AchivementsComponent,
+    LeaderboardComponent,
+    MainMenuComponent,
+    NewGameComponent,
+  ],
+  imports: [CommonModule,
+    FeatureBallBlastModule,
+    RouterModule.forChild(remoteRoutes)],
+  providers: [],
 })
-export class RemoteEntryModule {}
+export class RemoteEntryModule { }
