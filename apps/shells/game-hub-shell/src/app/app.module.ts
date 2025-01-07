@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { environment } from '../env/env.local';
 import { SharedDomainLogicModule, Environment } from '@game-hub/shared/domain-logic';
@@ -20,7 +19,7 @@ const ROUTES: Route[] = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, MainComponent, MainComponent],
+  declarations: [AppComponent, MainComponent, MainComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

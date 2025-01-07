@@ -1,43 +1,31 @@
 {
-  "name": "game-hub-shell",
+  "name": "ball_blast",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "game-hub",
-  "sourceRoot": "apps/shells/game-hub-shell/src",
+  "prefix": "game-hub-ball-blast",
+  "sourceRoot": "apps/games/ball_blast/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shells/game-hub-shell",
-        "index": "apps/shells/game-hub-shell/src/index.html",
-        "main": "apps/shells/game-hub-shell/src/main.ts",
+        "outputPath": "dist/apps/games/ball_blast",
+        "index": "apps/games/ball_blast/src/index.html",
+        "main": "apps/games/ball_blast/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/shells/game-hub-shell/tsconfig.app.json",
+        "tsConfig": "apps/games/ball_blast/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/shells/game-hub-shell/public"
-          },
-          {
-            "input": "libs/shared/assets/src/lib/assets/snake-master",
-            "glob": "**.*",
-            "output": "assets/snake-master"
+            "input": "apps/games/ball_blast/public"
           }
         ],
-        "styles": [
-          "apps/shells/game-hub-shell/src/styles.scss",
-          "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-          "node_modules/ngx-toastr/toastr.css"
-        ],
-        "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
+        "styles": ["apps/games/ball_blast/src/styles.scss"],
+        "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/shells/game-hub-shell/webpack.config.ts"
-        },
-        "stylePreprocessorOptions": {
-          "includePaths": [".scss"]
+          "path": "apps/games/ball_blast/webpack.config.ts"
         }
       },
       "configurations": {
@@ -54,7 +42,10 @@
               "maximumError": "8kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/games/ball_blast/webpack.prod.config.ts"
+          }
         },
         "development": {
           "buildOptimizer": false,
@@ -68,21 +59,17 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/angular:module-federation-dev-server",
+      "executor": "@nx/angular:dev-server",
       "options": {
-        "port": 4200,
-        "publicHost": "http://localhost:4200",
-        "devRemotes": [
-          "snake_master",
-          "ball_blast"
-        ]
+        "port": 4202,
+        "publicHost": "http://localhost:4202"
       },
       "configurations": {
         "production": {
-          "buildTarget": "game-hub-shell:build:production"
+          "buildTarget": "ball_blast:build:production"
         },
         "development": {
-          "buildTarget": "game-hub-shell:build:development"
+          "buildTarget": "ball_blast:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -90,7 +77,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "game-hub-shell:build"
+        "buildTarget": "ball_blast:build"
       }
     },
     "lint": {
@@ -98,10 +85,19 @@
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
       "options": {
-        "buildTarget": "game-hub-shell:build",
-        "port": 4200,
-        "spa": true
+        "buildTarget": "ball_blast:build",
+        "port": 4202,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "ball_blast:build:development"
+        },
+        "production": {
+          "buildTarget": "ball_blast:build:production"
+        }
       }
     }
   }
