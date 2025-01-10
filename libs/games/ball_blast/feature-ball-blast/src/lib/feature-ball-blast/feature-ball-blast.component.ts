@@ -1,22 +1,31 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { GameState } from '@game-hub/shared/domain-logic';
 
 @Component({
   selector: 'game-hub-feature-ball-blast',
   templateUrl: './feature-ball-blast.component.html',
-  styleUrl: './feature-ball-blast.component.scss',
-  standalone: false
+  styleUrls: ['./feature-ball-blast.component.scss'],
+  standalone: false,
 })
 export class FeatureBallBlastComponent implements AfterViewInit, OnDestroy {
   @ViewChild('gameCanvas', { static: false }) gameCanvas!: ElementRef<HTMLCanvasElement>;
-  private gameInterval: any;
-  private ballInterval: any;
+  private ctx!: CanvasRenderingContext2D;
+
+  private gameInterval!: number;
+  private ballInterval!: number;
+  private shootInterval?: number;
+
+  private cannon = { x: 0, width: 50, height: 20, speed: 5 };
   private bullets: Array<{ x: number; y: number }> = [];
-  private balls: Array<{ x: number; y: number; size: number; number: number; speed: number; vy: number; color: string }> = [];
+  private balls: Array<{ x: number; y: number; size: number; number: number; color: string; vy: number }> = [];
   private coins: Array<{ x: number; y: number; collected: boolean }> = [];
-  private cannon: { x: number; width: number; height: number } = { x: 0, width: 50, height: 20 };
+
+  protected isGameOver = false;
   protected score = 0;
-  protected coinCount = 0;
-  protected gameOver = false;
+  private coinsCollected = 0;
+  protected gameState = GameState.NotStarted
+  protected GameState = GameState;
+  private keysPressed: Record<string, boolean> = {};
 
   ngAfterViewInit(): void {
     this.initializeGame();
@@ -25,69 +34,97 @@ export class FeatureBallBlastComponent implements AfterViewInit, OnDestroy {
   private initializeGame(): void {
     const canvas = this.gameCanvas.nativeElement;
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.88; // Matches the game-container height
+    canvas.height = window.innerHeight * 0.88; // Match visible area
+    this.ctx = canvas.getContext('2d')!;
     this.cannon.x = canvas.width / 2 - this.cannon.width / 2;
+
     this.startGame();
   }
 
   private startGame(): void {
     this.score = 0;
-    this.coinCount = 0;
+    this.coinsCollected = 0;
+    this.isGameOver = false;
     this.bullets = [];
     this.balls = [];
     this.coins = [];
-    this.gameOver = false;
+    this.keysPressed = {};
 
-    if (this.gameInterval) clearInterval(this.gameInterval);
-    if (this.ballInterval) clearInterval(this.ballInterval);
+    clearInterval(this.gameInterval);
+    clearInterval(this.ballInterval);
+    clearInterval(this.shootInterval);
 
     this.gameInterval = setInterval(() => this.updateGame(), 16); // ~60 FPS
-    this.ballInterval = setInterval(() => this.spawnBall(), 100); // Ball spawn frequency
+    this.ballInterval = setInterval(() => this.spawnBall(), 2500); // Ball spawn frequency
   }
 
   private updateGame(): void {
-    if (!this.gameCanvas) return;
-
     const canvas = this.gameCanvas.nativeElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.handleCannonMovement();
+    this.drawCannon();
+    this.drawBullets();
+    this.drawBalls();
+    this.drawCoins();
+    this.displayScore();
 
-    // Draw the cannon
-    ctx.fillStyle = '#000';
-    ctx.fillRect(this.cannon.x, canvas.height - this.cannon.height - 20, this.cannon.width, this.cannon.height);
+    if (this.isGameOver) {
+      this.endGame();
+    }
+  }
 
-    // Draw bullets
-    ctx.fillStyle = 'red'; // Use a distinct color for bullets
+  private handleCannonMovement(): void {
+    const canvas = this.gameCanvas.nativeElement;
+    if (this.keysPressed['ArrowLeft']) {
+      this.cannon.x = Math.max(this.cannon.x - this.cannon.speed, 0);
+    }
+    if (this.keysPressed['ArrowRight']) {
+      this.cannon.x = Math.min(this.cannon.x + this.cannon.speed, canvas.width - this.cannon.width);
+    }
+  }
+
+  private drawCannon(): void {
+    const canvas = this.gameCanvas.nativeElement;
+    this.ctx.fillStyle = 'black';
+    this.ctx.fillRect(this.cannon.x, canvas.height - this.cannon.height - 20, this.cannon.width, this.cannon.height);
+  }
+
+  private drawBullets(): void {
+    const canvas = this.gameCanvas.nativeElement;
+    this.ctx.fillStyle = 'red'; // Bullet color
     this.bullets.forEach((bullet, index) => {
-      bullet.y -= 10; // Bullet speed
-      ctx.fillRect(bullet.x, bullet.y, 5, 15); // Bullet size: 5px wide, 15px tall
-      if (bullet.y + 15 < 0) this.bullets.splice(index, 1); // Remove bullets off-screen
-    });
+      bullet.y -= 10; // Move bullet upwards
+      this.ctx.fillRect(bullet.x, bullet.y, 5, 10); // Bullet size
 
-    // Draw balls
+      if (bullet.y < 0) this.bullets.splice(index, 1); // Remove off-screen bullets
+    });
+  }
+
+  private drawBalls(): void {
+    const canvas = this.gameCanvas.nativeElement;
     this.balls.forEach((ball, index) => {
       ball.y += ball.vy;
-      ball.vy += 0.2; // Simulates gravity
+      ball.vy += 0.2; // Gravity effect
 
+      // Bounce off the ground
       if (ball.y + ball.size >= canvas.height) {
-        ball.vy = -Math.abs(ball.vy) * 0.8; // Reverse direction and reduce speed for bounce
-        ball.y = canvas.height - ball.size; // Prevent ball from sinking below ground
+        ball.vy = -Math.abs(ball.vy) * 0.8; // Bounce up
+        ball.y = canvas.height - ball.size; // Reset position
       }
 
-      ctx.fillStyle = ball.color;
-      ctx.beginPath();
-      ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
-      ctx.fill();
+      // Draw the ball
+      this.ctx.fillStyle = ball.color;
+      this.ctx.beginPath();
+      this.ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
+      this.ctx.fill();
 
-      // Draw ball number
-      ctx.fillStyle = 'white';
-      ctx.font = '14px Arial';
-      ctx.fillText(`${ball.number}`, ball.x - 8, ball.y + 5);
+      // Draw the number
+      this.ctx.fillStyle = 'white';
+      this.ctx.font = '14px Arial';
+      this.ctx.fillText(`${ball.number}`, ball.x - 8, ball.y + 5);
 
-      // Check collision with bullets
+      // Check for collisions with bullets
       this.bullets.forEach((bullet, bulletIndex) => {
         const dist = Math.hypot(bullet.x - ball.x, bullet.y - ball.y);
         if (dist < ball.size) {
@@ -99,23 +136,25 @@ export class FeatureBallBlastComponent implements AfterViewInit, OnDestroy {
         }
       });
 
-      // Check if ball hits cannon
+      // Check if ball hits the cannon
       if (
         ball.y + ball.size >= canvas.height - this.cannon.height - 20 &&
         ball.x >= this.cannon.x &&
         ball.x <= this.cannon.x + this.cannon.width
       ) {
-        this.endGame();
+        this.isGameOver = true;
       }
     });
+  }
 
-    // Draw coins
-    ctx.fillStyle = 'gold';
+  private drawCoins(): void {
+    const canvas = this.gameCanvas.nativeElement;
     this.coins.forEach((coin, index) => {
       if (!coin.collected) {
-        ctx.beginPath();
-        ctx.arc(coin.x, coin.y, 10, 0, Math.PI * 2);
-        ctx.fill();
+        this.ctx.fillStyle = 'gold';
+        this.ctx.beginPath();
+        this.ctx.arc(coin.x, coin.y, 10, 0, Math.PI * 2);
+        this.ctx.fill();
       }
 
       // Check if coin is collected
@@ -125,91 +164,71 @@ export class FeatureBallBlastComponent implements AfterViewInit, OnDestroy {
         coin.x <= this.cannon.x + this.cannon.width
       ) {
         coin.collected = true;
-        this.coinCount++;
+        this.coinsCollected++;
         this.coins.splice(index, 1);
       }
     });
-
-    // Display score and coins
-    ctx.fillStyle = 'black';
-    ctx.font = '20px Arial';
-    ctx.fillText(`Score: ${this.score}`, 10, 30);
-    ctx.fillText(`Coins: ${this.coinCount}`, 10, 60);
-
-    // Handle game over screen
-    if (this.gameOver) {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      ctx.font = '40px Arial';
-      ctx.fillText('Game Over!', canvas.width / 2 - 100, canvas.height / 2);
-      ctx.fillText(`Final Score: ${this.score}`, canvas.width / 2 - 120, canvas.height / 2 + 50);
-      clearInterval(this.gameInterval);
-      clearInterval(this.ballInterval);
-    }
   }
 
   private spawnBall(): void {
     const canvas = this.gameCanvas.nativeElement;
-    const size = Math.random() * 20 + 30;
-    const number = Math.ceil(size / 10);
-    const speed = Math.random() * 1.5 + 0.5;
-    const x = Math.random() * (canvas.width - size * 2) + size;
-    const color = `hsl(${Math.random() * 360}, 70%, 50%)`; // Random ball color
+    const size = Math.random() * 20 + 30; // Ball size
+    const number = Math.ceil(size / 10); // Number on the ball
+    const x = Math.random() * (canvas.width - size * 2) + size; // Random X position
+    const color = `hsl(${Math.random() * 360}, 70%, 50%)`; // Random color
 
-    this.balls.push({ x, y: -size, size, number, speed, vy: 2, color });
+    this.balls.push({ x, y: -size, size, number, color, vy: 2 });
   }
 
   private splitBall(ball: any, index: number): void {
     this.score += 10;
-    const coinX = ball.x;
 
     // Drop a coin
-    this.coins.push({ x: coinX, y: ball.y, collected: false });
+    this.coins.push({ x: ball.x, y: ball.y, collected: false });
 
+    // Create smaller balls if applicable
     if (ball.size > 20) {
-      this.balls.push({
-        x: ball.x - ball.size / 2,
-        y: ball.y,
-        size: ball.size / 2,
-        number: Math.ceil(ball.number / 2),
-        speed: ball.speed,
-        vy: -2,
-        color: ball.color,
-      });
-      this.balls.push({
-        x: ball.x + ball.size / 2,
-        y: ball.y,
-        size: ball.size / 2,
-        number: Math.ceil(ball.number / 2),
-        speed: ball.speed,
-        vy: -2,
-        color: ball.color,
-      });
+      const newSize = ball.size / 2;
+      this.balls.push({ x: ball.x - newSize, y: ball.y, size: newSize, number: Math.ceil(ball.number / 2), color: ball.color, vy: -2 });
+      this.balls.push({ x: ball.x + newSize, y: ball.y, size: newSize, number: Math.ceil(ball.number / 2), color: ball.color, vy: -2 });
     }
 
+    // Remove the original ball
     this.balls.splice(index, 1);
   }
 
+  private displayScore(): void {
+    this.ctx.fillStyle = 'black';
+    this.ctx.font = '20px Arial';
+    this.ctx.fillText(`Score: ${this.score}`, 10, 30);
+    this.ctx.fillText(`Coins: ${this.coinsCollected}`, 10, 60);
+  }
+
   private endGame(): void {
-    this.gameOver = true;
+    clearInterval(this.gameInterval);
+    clearInterval(this.ballInterval);
+
+    const canvas = this.gameCanvas.nativeElement;
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    this.ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
-    const canvas = this.gameCanvas.nativeElement;
-    if (this.gameOver) return;
+    this.keysPressed[event.key] = true;
 
-    switch (event.key) {
-      case 'ArrowLeft':
-        this.cannon.x = Math.max(this.cannon.x - 20, 0);
-        break;
-      case 'ArrowRight':
-        this.cannon.x = Math.min(this.cannon.x + 20, canvas.width - this.cannon.width);
-        break;
-      case ' ':
-        this.shootBullet();
-        break;
+    if (event.key === ' ' && !this.shootInterval) {
+      this.shootInterval = setInterval(() => this.shootBullet(), 200); // Shoot every 200ms
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  handleKeyUp(event: KeyboardEvent): void {
+    this.keysPressed[event.key] = false;
+
+    if (event.key === ' ' && this.shootInterval) {
+      clearInterval(this.shootInterval);
+      this.shootInterval = undefined;
     }
   }
 
@@ -221,12 +240,9 @@ export class FeatureBallBlastComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  restartGame(): void {
-    this.initializeGame();
-  }
-
   ngOnDestroy(): void {
     clearInterval(this.gameInterval);
     clearInterval(this.ballInterval);
+    clearInterval(this.shootInterval);
   }
 }
