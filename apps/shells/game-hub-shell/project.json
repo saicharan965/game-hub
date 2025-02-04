@@ -74,7 +74,8 @@
         "publicHost": "http://localhost:4200",
         "devRemotes": [
           "snake_master",
-          "ball_blast"
+          "ball_blast",
+          "global_chat"
         ]
       },
       "configurations": {

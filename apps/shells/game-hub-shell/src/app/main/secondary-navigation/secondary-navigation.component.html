@@ -24,18 +24,15 @@
   </button>
 
   @if (showChat) {
-    <div class="chat-module">
-      <div class="chat-header">
-        Chat
-        <button class="chat-close-btn" (click)="toggleChat()">&times;</button>
-      </div>
-      <div class="chat-content">
-        <router-outlet name="chat"></router-outlet>
-      </div>
-      <div class="chat-footer">
-        <input type="text" class="chat-input form-control" placeholder="Type a message...">
-      </div>
+  <div class="chat-module">
+    <div class="chat-header">
+      Global Chat
+      <button class="chat-close-btn" (click)="toggleChat()">&times;</button>
     </div>
+    <div class="chat-content">
+      <router-outlet name="chat"></router-outlet>
+    </div>
+  </div>
   }
 
 </div>

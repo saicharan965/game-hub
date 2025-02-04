@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@game-hub/assets": ["libs/shared/assets/src/index.ts"],
+      "@game-hub/operations/global-chat/feature-chat": [
+        "libs/operations/global-chat/feature-chat/src/index.ts"
+      ],
       "@game-hub/games/feature-ball-blast": [
         "libs/games/ball_blast/feature-ball-blast/src/index.ts"
       ],

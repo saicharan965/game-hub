@@ -1,4 +1,4 @@
 import { Route } from '@angular/router';
-import { RemoteEntryComponent } from './entry.component';
+import { ChatComponent } from './chat/chat.component';
 
-export const remoteRoutes: Route[] = [{ path: '', component: RemoteEntryComponent }];
+export const remoteRoutes: Route[] = [{ path: '', component: ChatComponent, pathMatch: 'full' }];
