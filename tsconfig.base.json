@@ -28,6 +28,9 @@
       "ball_blast/Module": [
         "apps/games/ball_blast/src/app/remote-entry/entry.module.ts"
       ],
+      "global_chat/Module": [
+        "apps/operations/global_chat/src/app/remote-entry/entry.module.ts"
+      ],
       "snake_master/Module": [
         "apps/games/snake_master/src/app/remote-entry/entry.module.ts"
       ]
