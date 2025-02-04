@@ -1,12 +1,14 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { API_BASE_URL, UserDetailsResponse } from './api.service';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private baseUrl: string;
   private hubConnection!: signalR.HubConnection;
+  public recivedMessage$: Subject<{ message: string, user: UserDetailsResponse }> = new Subject<{ message: string, user: UserDetailsResponse }>();
 
   constructor(@Optional() @Inject(API_BASE_URL) baseUrl?: string) {
     this.baseUrl = baseUrl ? `http://localhost:5098/chatHub` : "";
@@ -28,7 +30,7 @@ export class ChatService {
     });
 
     this.hubConnection.on('ReceiveMessage', (user: UserDetailsResponse, message: string) => {
-      console.log(`📩 message: ${message} :: user : ${user}`);
+      this.recivedMessage$.next({ message, user });
     });
   }
 
