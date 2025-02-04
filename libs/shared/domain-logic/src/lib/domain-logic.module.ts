@@ -6,6 +6,7 @@ import { SnakeFacadeService } from './snake-facade.service';
 import { UserFacadeService } from './user-facade.service';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token-interceptor.service';
+import { ChatService } from './chat.service';
 
 @NgModule({
   imports: [CommonModule],
@@ -34,6 +35,7 @@ export class SharedDomainLogicModule {
         Client,
         SnakeFacadeService,
         UserFacadeService,
+        ChatService
       ],
     };
   }
