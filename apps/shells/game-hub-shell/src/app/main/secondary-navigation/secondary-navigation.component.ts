@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './secondary-navigation.component.scss',
 })
 export class SecondaryNavigationComponent {
-  showChat = false
+  protected showChat = true
   protected toggleChat() {
     this.showChat = !this.showChat
    }
