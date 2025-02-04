@@ -1,14 +1,16 @@
+@import "shared";
+
 .secondary-navbar {
   display: flex;
   align-items: center;
-  background-color: #343a40;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: $grey-90;
+  box-shadow: 0 2px 4px $dark;
 }
 
 .secondary-navbar .btn {
-  color: white;
+  color: $grey-10;
   font-size: 1.2rem;
-  border: 1px solid white;
+  border: 1px solid $grey-10;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -18,13 +20,14 @@
 }
 
 .game-container {
-  position: relative;
-  width: 100vw;
-  height: 88vh;
+  position: fixed;
+  width: 99.9vw;
+  height: 85.5vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom right, #f1f2f6, #f39c12);
+  border: 1px solid $red-60;
+  background: linear-gradient(to bottom right, $grey-10, $yellow-50);
   overflow: hidden;
 }
 
@@ -44,10 +47,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: $dark;
   padding: 30px;
   border-radius: 15px;
-  color: white;
+  color: $grey-10;
   font-size: 1.5rem;
   animation: fadeIn 0.5s ease-in-out;
   z-index: 2;
@@ -64,8 +67,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background: $red-40;
+  color: $grey-10;
   padding: 30px;
   border-radius: 10px;
   animation: fadeIn 0.5s ease-in-out;
@@ -78,8 +81,8 @@
 }
 
 .game-over-screen button {
-  background-color: #e67e22;
-  color: white;
+  background-color: $orange-50;
+  color: $grey-10;
   font-size: 1.2rem;
   padding: 12px 25px;
   border: none;
@@ -89,7 +92,7 @@
 }
 
 .game-over-screen button:hover {
-  background-color: #e0a800;
+  background-color: $yellow-50;
 }
 
 .game-over-screen button:active {
