@@ -1,8 +1,20 @@
+<div class="chat-container">
+  <div class="chat-messages-container" #chatMessagesContainer>
+    <ng-container *ngFor="let msg of messages">
+      <operations-global-chat-message-right *ngIf="msg.userEmail === user.email"
+        [message]="msg.message"></operations-global-chat-message-right>
+      <operations-global-chat-message-left *ngIf="msg.userEmail !== user.email"
+        [message]="msg.message"></operations-global-chat-message-left>
+    </ng-container>
+  </div>
+</div>
+
 <div class="chat-footer">
-  <div class="chat-messages-container" #chatMessagesContainer></div>
   <div class="chat-input-container w-100 d-flex justify-content-between align-items-center">
-    <input type="text" class="chat-input form-control h-100 mb-1 ms-1" [(ngModel)]="inputMessage" placeholder="Type a message...">
-    <button class="btn btn-success btn-sm rounded-2 mb-1 mx-1" (click)="sendMessage()"> <i class="bi bi-send"
-        ></i></button>
+    <input type="text" class="chat-input form-control h-100 mb-1 ms-1" [(ngModel)]="inputMessage"
+      placeholder="Type a message..." />
+    <button class="btn btn-success btn-sm rounded-2 mb-1 mx-1" (click)="sendMessage()">
+      <i class="bi bi-send"></i>
+    </button>
   </div>
 </div>

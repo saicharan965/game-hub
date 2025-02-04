@@ -1,0 +1,11 @@
+@import "shared";
+
+.message-right {
+  background-color: $success;
+  color: $white;
+  padding: 10px;
+  border-radius: 10px 10px 0 10px;
+  margin: 5px;
+  max-width: 90%;
+  align-self: flex-end;
+}

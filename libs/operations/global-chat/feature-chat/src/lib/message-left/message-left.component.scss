@@ -1,0 +1,9 @@
+@import "shared";
+
+.message-left {
+  background-color: $orange-50;
+  padding: 10px;
+  border-radius: 10px 10px 10px 0;
+  margin: 5px;
+  max-width: 70%;
+}

@@ -26,7 +26,7 @@ export class ChatService {
       .catch(err => console.error('Connection error: ', err));
 
     this.hubConnection.on('GetPreviousChats', (messages: any[]) => {
-      console.log(`📩 messages: ${messages}`);
+      console.log("📩 messages:", messages);
     });
 
     this.hubConnection.on('ReceiveMessage', (user: UserDetailsResponse, message: string) => {
