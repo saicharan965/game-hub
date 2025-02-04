@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { AuthService, User } from '@auth0/auth0-angular';
-import { ChatService } from '@game-hub/shared/domain-logic';
+import { ChatService, UserDetailsResponse } from '@game-hub/shared/domain-logic';
 
 interface ChatMessage {
   message: string;
-  userEmail: string;
+  userDetails: UserDetailsResponse;
 }
 
 @Component({
@@ -31,11 +31,11 @@ export class OperationsGlobalChatFeatureChatComponent implements OnInit {
       }
     });
 
-    this.#chatService.recivedMessage$.subscribe((message) => {
-      console.log('📩 message received: ', message);
+    this.#chatService.recivedMessage$.subscribe((receivedMessage) => {
+      console.log('📩 message received: ', receivedMessage);
       this.messages.push({
-        message: message.message,
-        userEmail: message.user.emailId!
+        message: receivedMessage.message,
+        userDetails: receivedMessage.user,
       });
 
       setTimeout(() => {

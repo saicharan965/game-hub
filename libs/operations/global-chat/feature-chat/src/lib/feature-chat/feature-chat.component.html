@@ -1,10 +1,10 @@
 <div class="chat-container">
   <div class="chat-messages-container" #chatMessagesContainer>
     <ng-container *ngFor="let msg of messages">
-      <operations-global-chat-message-right *ngIf="msg.userEmail === user.email"
-        [message]="msg.message"></operations-global-chat-message-right>
-      <operations-global-chat-message-left *ngIf="msg.userEmail !== user.email"
-        [message]="msg.message"></operations-global-chat-message-left>
+      <operations-global-chat-message-right *ngIf="msg.userDetails.emailId === user.email" [message]="msg.message"
+        [userDetails]="msg.userDetails"></operations-global-chat-message-right>
+      <operations-global-chat-message-left *ngIf="msg.userDetails.emailId !== user.email" [message]="msg.message"
+        [userDetails]="msg.userDetails"></operations-global-chat-message-left>
     </ng-container>
   </div>
 </div>

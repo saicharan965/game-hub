@@ -1,3 +1,6 @@
 <div class="message message-right">
-  {{ message }}
+  <img referrerPolicy="no-referrer" class="img-fluid bg-info rounded-circle" [src]="userDetails.profilePictureUrl"
+    alt="">
+  <span class="text-base"> {{ message }}</span>
 </div>
+<p class="text-small align-self-end"> {{ userDetails.name }}</p>

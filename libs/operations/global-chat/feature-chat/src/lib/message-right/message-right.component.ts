@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { UserDetailsResponse } from '@game-hub/shared/domain-logic';
 
 @Component({
   selector: 'operations-global-chat-message-right',
@@ -8,4 +9,6 @@ import { Component, Input } from '@angular/core';
 })
 export class MessageRightComponent {
   @Input() message!: string;
+  @Input() userDetails!: UserDetailsResponse;
+
 }
