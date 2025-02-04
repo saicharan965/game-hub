@@ -16,6 +16,9 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/operations/global_chat/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
+        "stylePreprocessorOptions": {
+          "includePaths": [".scss"]
+        },
         "assets": [
           {
             "glob": "**/*",

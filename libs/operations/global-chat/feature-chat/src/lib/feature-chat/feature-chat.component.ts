@@ -25,8 +25,7 @@ export class OperationsGlobalChatFeatureChatComponent implements OnInit {
       console.log('📩 message: ', message)
       if (this.chatContainer) {
         const div = document.createElement('div');
-        div.className = 'chat-message';
-        div.innerHTML = `<p> ${message.message}</p>`;
+        div.innerHTML = `<p class="message message-right"> ${message.message}</p>`;
         this.chatContainer.nativeElement.appendChild(div);
       }
     })
