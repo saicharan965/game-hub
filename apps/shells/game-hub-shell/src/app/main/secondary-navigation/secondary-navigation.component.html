@@ -19,4 +19,23 @@
 <hr class="p-0 m-0 text-light">
 <div>
   <router-outlet></router-outlet>
+  <button class="chat-btn btn btn-warning rounded-circle" (click)="toggleChat()">
+    <i class="bi bi-chat-fill"></i>
+  </button>
+
+  @if (showChat) {
+    <div class="chat-module">
+      <div class="chat-header">
+        Chat
+        <button class="chat-close-btn" (click)="toggleChat()">&times;</button>
+      </div>
+      <div class="chat-content">
+        <router-outlet name="chat"></router-outlet>
+      </div>
+      <div class="chat-footer">
+        <input type="text" class="chat-input form-control" placeholder="Type a message...">
+      </div>
+    </div>
+  }
+
 </div>

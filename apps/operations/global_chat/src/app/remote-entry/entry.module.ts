@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 import { RemoteEntryComponent } from './entry.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { remoteRoutes } from './entry.routes';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
-    declarations: [RemoteEntryComponent, NxWelcomeComponent],
+    declarations: [RemoteEntryComponent, NxWelcomeComponent, ChatComponent],
     imports: [CommonModule, RouterModule.forChild(remoteRoutes)],
     providers: [],
 })

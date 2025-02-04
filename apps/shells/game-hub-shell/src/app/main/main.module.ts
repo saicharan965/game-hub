@@ -29,6 +29,12 @@ const ROUTES: Route[] = [
             loadChildren: () =>
               loadRemote<typeof import('ball_blast/Module')>('ball_blast/Module').then((m) => m!.RemoteEntryModule),
           },
+          {
+            path: '',
+            outlet: 'chat',
+            loadChildren: () =>
+              loadRemote<typeof import('global_chat/Module')>('global_chat/Module').then((m) => m!.RemoteEntryModule),
+          },
         ]
       }
     ],
