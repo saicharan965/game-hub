@@ -15,9 +15,19 @@ const ROUTES: Route[] = [
         component: SecondaryNavigationComponent,
         children: [
           {
+            path: '',
+            redirectTo:'snake-master',
+            pathMatch: 'full'
+          },
+          {
             path: 'snake-master',
             loadChildren: () =>
               loadRemote<typeof import('snake_master/Module')>('snake_master/Module').then((m) => m!.RemoteEntryModule),
+          },
+          {
+            path: 'ball-blast',
+            loadChildren: () =>
+              loadRemote<typeof import('ball_blast/Module')>('ball_blast/Module').then((m) => m!.RemoteEntryModule),
           },
         ]
       }

@@ -1,3 +1,4 @@
 {
-  "snake_master": "http://localhost:4201/mf-manifest.json"
+  "snake_master": "http://localhost:4201/mf-manifest.json",
+  "ball_blast": "http://localhost:4202/mf-manifest.json"
 }

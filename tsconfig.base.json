@@ -16,11 +16,17 @@
     "baseUrl": ".",
     "paths": {
       "@game-hub/assets": ["libs/shared/assets/src/index.ts"],
+      "@game-hub/games/feature-ball-blast": [
+        "libs/games/ball_blast/feature-ball-blast/src/index.ts"
+      ],
       "@game-hub/games/feature-snake-master": [
         "libs/games/snake_master/feature-snake-master/src/index.ts"
       ],
       "@game-hub/shared/domain-logic": [
         "libs/shared/domain-logic/src/index.ts"
+      ],
+      "ball_blast/Module": [
+        "apps/games/ball_blast/src/app/remote-entry/entry.module.ts"
       ],
       "snake_master/Module": [
         "apps/games/snake_master/src/app/remote-entry/entry.module.ts"
