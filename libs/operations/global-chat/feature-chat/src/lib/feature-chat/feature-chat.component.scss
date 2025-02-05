@@ -1,8 +1,16 @@
 @import "shared";
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
 .chat-input {
-  position: relative;
   bottom: 0;
+}
+
+.chat-messages-container {
+  height: 275px;
+  overflow-y: auto;
 }
 
 .chat-input-container {
@@ -10,12 +18,9 @@
   bottom: 0;
 }
 
-.message {
-  background-color: $success;
-  padding: 10px;
-  width: 100%;
+.chat-container {
+  height: 280px;
 }
-
-.message-right {
-  border-radius: 10px 10px 0 10px;
+.chat-footer {
+  height: 50px;
 }
