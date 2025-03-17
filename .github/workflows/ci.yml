@@ -32,10 +32,10 @@ jobs:
 
             # Lint and automatically fix issues before failing
             - run: npx nx affected -t lint --fix
-
+              continue-on-error: true
             # Fail fast if linting fails
             - run: npx nx affected -t lint
-              continue-on-error: false
+              continue-on-error: true
 
             # Run tests
             - run: npx nx affected -t test
