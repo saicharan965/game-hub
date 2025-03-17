@@ -30,15 +30,15 @@ jobs:
 
             - uses: nrwl/nx-set-shas@v4
 
-            # # Lint and automatically fix issues before failing
-            # - run: npx nx affected -t lint --fix
-            #   continue-on-error: true
-            # # Fail fast if linting fails
-            # - run: npx nx affected -t lint
-            #   continue-on-error: true
-
-            # # Run tests
-            # - run: npx nx affected -t test
-
             # Build the project
             - run: npx nx affected -t build
+
+            # Debug: Check where the artifacts are
+            - run: ls -R dist
+
+            # Upload build artifacts
+            - name: Upload Build Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: game-hub-build
+                  path: dist/
