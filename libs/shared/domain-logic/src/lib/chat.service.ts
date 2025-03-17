@@ -15,7 +15,7 @@ export class ChatService {
     console.log('baseUrl', this.baseUrl);
   }
 
-  startConnection(userId: string) {
+  startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(this.baseUrl)
       .withAutomaticReconnect()

@@ -27,7 +27,7 @@ export class OperationsGlobalChatFeatureChatComponent implements OnInit {
     this.#authService.user$.subscribe((user) => {
       if (user && user.email) {
         this.user = user;
-        this.#chatService.startConnection(user.email);
+        this.#chatService.startConnection();
       }
     });
 

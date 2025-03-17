@@ -1,4 +1,15 @@
-<div class="message message-left d-flex align-items-center justify-content-start">
+<div class="message message-left d-flex align-items-center justify-content-start" data-bs-toggle="dropdown">
+  <ul class="dropdown-menu dropdown-menu-end bg-success-subtle">
+    <li routerLink="profile" class="dropdown-item py-2 btn">
+      <i class="bi bi-person-circle me-1 text-primary"></i> View Profile
+    </li>
+    <li routerLink="profile" class="dropdown-item py-2 btn">
+      <i class="bi bi-person-circle me-1 text-primary"></i>Challange
+    </li>
+    <li tabindex="0" class="dropdown-item py-2 btn">
+      <i class="bi bi-box-arrow-right me-1 text-primary"></i> Message
+    </li>
+  </ul>
   <img referrerPolicy="no-referrer" class="img-fluid bg-info rounded-circle" [src]="userDetails.profilePictureUrl"
     alt="">
   <span class="text-base"> {{ message }}</span>
