@@ -10,7 +10,10 @@
       "executor": "@nx/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/games/snake_master/feature-snake-master/ng-package.json"
+        "project": "libs/games/snake_master/feature-snake-master/ng-package.json",
+        "stylePreprocessorOptions": {
+          "includePaths": [".scss"]
+        }
       },
       "configurations": {
         "production": {
