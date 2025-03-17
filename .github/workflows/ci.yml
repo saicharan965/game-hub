@@ -1,60 +1,44 @@
-name: CI-CD - Deploy Changed MFEs & Shell
+name: CI
 
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
+    pull_request:
 
 permissions:
-  actions: read
-  contents: read
+    actions: read
+    contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      affected_apps: ${{ steps.set-affected.outputs.affected_apps }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    main:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
 
-      - run: npm ci --legacy-peer-deps
+            - run: npm ci --legacy-peer-deps
 
-      - uses: nrwl/nx-set-shas@v4
+            # Ensure peer dependencies are correctly installed
+            - run: npm list || echo "Dependency issues detected, please check package.json"
 
-      # Get affected apps (only those that have changed)
-      - name: Get Affected Apps
-        id: set-affected
-        run: echo "affected_apps=$(npx nx print-affected --type=app --select=projects)" >> $GITHUB_ENV
+            - uses: nrwl/nx-set-shas@v4
 
-      # Debug: Show affected apps
-      - run: echo "Affected Apps: $affected_apps"
+            # Build the project
+            - run: npx nx affected -t build
 
-      # Build only the affected apps
-      - run: npx nx affected -t build --exclude=libs
+            # Debug: Check where the artifacts are
+            - run: ls -R dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        app: ${{ fromJson(env.affected_apps) }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Deploy ${{ matrix.app }}
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets[format('AZURE_STATIC_WEB_APPS_API_TOKEN_{0}', matrix.app)] }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "dist/apps/${{ matrix.app }}"
-          output_location: ""
+            # Upload build artifacts
+            - name: Upload Build Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: game-hub-build
+                  path: dist/
