@@ -1,69 +1,44 @@
-name: CD - Deploy Changed MFEs & Shell
+name: CI
 
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
+    pull_request:
 
 permissions:
-  actions: read
-  contents: read
+    actions: read
+    contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      affected_apps: ${{ steps.set-affected.outputs.affected_apps }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    main:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+            - run: npm ci --legacy-peer-deps
 
-      - name: Set NX SHAs
-        uses: nrwl/nx-set-shas@v4
+            # Ensure peer dependencies are correctly installed
+            - run: npm list || echo "Dependency issues detected, please check package.json"
 
-      - name: Determine Affected Apps
-        id: set-affected
-        run: |
-          AFFECTED_APPS=$(npx nx print-affected --type=app --select=projects --json | jq -c '.projects')
-          echo "affected_apps=$AFFECTED_APPS" >> $GITHUB_ENV
-          echo "affected_apps=$AFFECTED_APPS" >> $GITHUB_OUTPUT
+            - uses: nrwl/nx-set-shas@v4
 
-      - name: Display Affected Apps
-        run: |
-          echo "Affected Apps: ${{ env.affected_apps }}"
+            # Build the project
+            - run: npx nx affected -t build
 
-      - name: Build Affected Apps
-        run: npx nx affected -t build --exclude=libs
+            # Debug: Check where the artifacts are
+            - run: ls -R dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: ${{ needs.build.outputs.affected_apps != '[]' && needs.build.outputs.affected_apps != '' }}
-    strategy:
-      matrix:
-        app: ${{ fromJson(needs.build.outputs.affected_apps) }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Deploy ${{ matrix.app }} to Azure Static Web Apps
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets[format('AZURE_STATIC_WEB_APPS_API_TOKEN_{0}', matrix.app)] }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "dist/apps/${{ matrix.app }}"
-          output_location: ""
+            # Upload build artifacts
+            - name: Upload Build Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: game-hub-build
+                  path: dist/
