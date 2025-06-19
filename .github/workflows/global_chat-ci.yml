@@ -1,0 +1,28 @@
+name: CI for global_chat
+
+on:
+  push:
+    paths:
+      - 'apps/global_chat/**'
+      - '.github/workflows/global_chat-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/global_chat/**'
+      - '.github/workflows/global_chat-ci.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npx nx build global_chat
+      - name: Upload dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-global_chat
+          path: dist/apps/global_chat 

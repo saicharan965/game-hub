@@ -1,0 +1,28 @@
+name: CI for game-hub-shell
+
+on:
+  push:
+    paths:
+      - 'apps/game-hub-shell/**'
+      - '.github/workflows/game-hub-shell-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/game-hub-shell/**'
+      - '.github/workflows/game-hub-shell-ci.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npx nx build game-hub-shell
+      - name: Upload dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-game-hub-shell
+          path: dist/apps/game-hub-shell 

@@ -1,0 +1,28 @@
+name: CI for {{APP_NAME}}
+
+on:
+  push:
+    paths:
+      - 'apps/{{APP_NAME}}/**'
+      - '.github/workflows/{{APP_NAME}}-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/{{APP_NAME}}/**'
+      - '.github/workflows/{{APP_NAME}}-ci.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npx nx build {{APP_NAME}}
+      - name: Upload dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-{{APP_NAME}}
+          path: dist/apps/{{APP_NAME}} 
