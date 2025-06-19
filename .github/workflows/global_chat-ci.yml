@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - run: npx nx build global_chat
       - name: Upload dist
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@4
         with:
           name: dist-global_chat
           path: dist/apps/global_chat 

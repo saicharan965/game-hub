@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - run: npx nx build ball_blast
       - name: Upload dist
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@4
         with:
           name: dist-ball_blast
           path: dist/apps/ball_blast 
