@@ -7,7 +7,7 @@ on:
       - '.github/workflows/game-hub-shell-ci.yml'
   pull_request:
     paths:
-      - 'apps/game-hub-shell/**'
+      - 'apps/game-hub-shell/**' 
       - '.github/workflows/game-hub-shell-ci.yml'
 
 jobs:
