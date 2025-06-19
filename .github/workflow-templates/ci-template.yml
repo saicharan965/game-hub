@@ -22,7 +22,12 @@ jobs:
       - run: npm ci
       - run: npx nx build {{APP_NAME}}
       - name: Upload dist
-        uses: actions/upload-artifact@4
+        uses: actions/upload-artifact@v3
         with:
           name: dist-{{APP_NAME}}
-          path: dist/apps/{{APP_NAME}} 
+          path: dist/apps/{{APP_NAME}}
+      - name: Deploy to Netlify
+        run: npx netlify deploy --dir=dist/apps/{{APP_NAME}} --site=$NETLIFY_SITE_ID --auth=$NETLIFY_AUTH_TOKEN --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_{{APP_NAME_UC}} }} 

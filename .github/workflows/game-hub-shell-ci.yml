@@ -7,7 +7,7 @@ on:
       - '.github/workflows/game-hub-shell-ci.yml'
   pull_request:
     paths:
-      - 'apps/game-hub-shell/**' 
+      - 'apps/game-hub-shell/**'
       - '.github/workflows/game-hub-shell-ci.yml'
 
 jobs:
@@ -22,7 +22,12 @@ jobs:
       - run: npm ci
       - run: npx nx build game-hub-shell
       - name: Upload dist
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: dist-game-hub-shell
-          path: dist/apps/game-hub-shell 
+          path: dist/apps/game-hub-shell
+      - name: Deploy to Netlify
+        run: npx netlify deploy --dir=dist/apps/game-hub-shell --site=$NETLIFY_SITE_ID --auth=$NETLIFY_AUTH_TOKEN --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_{{APP_NAME_UC}} }} 

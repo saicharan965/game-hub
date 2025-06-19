@@ -22,7 +22,12 @@ jobs:
       - run: npm ci
       - run: npx nx build global_chat
       - name: Upload dist
-        uses: actions/upload-artifact@4
+        uses: actions/upload-artifact@v3
         with:
           name: dist-global_chat
-          path: dist/apps/global_chat 
+          path: dist/apps/global_chat
+      - name: Deploy to Netlify
+        run: npx netlify deploy --dir=dist/apps/global_chat --site=$NETLIFY_SITE_ID --auth=$NETLIFY_AUTH_TOKEN --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_{{APP_NAME_UC}} }} 
